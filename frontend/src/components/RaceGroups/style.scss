@@ -1,0 +1,10 @@
+.race-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+
+.race-group {
+  justify-self: center;
+  align-self: center;
+}
