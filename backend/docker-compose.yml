@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  local-webpage:
+    build: .
+    container_name: livecycling-backend
+    env_file:
+      - .env
+    ports:
+      - 7000:7000
+      - 7001:7001
+    #    command: sh -c "cd ./static-test/ && go run main.go & cd ../scrapper && go run main.go & cd ../api && go run main.go"
+    command: sh -c "sleep 1d"
+    volumes:
+      - ./:/opt/livecycling
+
+  postgres:
+    image: postgres:13.0-alpine
+    container_name: livecycling-postgres
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:

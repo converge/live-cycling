@@ -3,7 +3,7 @@ import React from 'react';
 const RaceBrand: React.FC = () => {
   return (
     <div className="race-brand">
-      Tour d' France
+      Race Name here
     </div>
   )
 }

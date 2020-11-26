@@ -5,7 +5,7 @@ const RaceDistance: React.FC = () => {
   const [prog, setProg] = useState(20);
 
   const upIt = () => {
-    setProg((prev) => prev + 1)
+    setProg((prev) => prev + 10)
 
   }
 
