@@ -18,6 +18,9 @@ services:
     container_name: livecycling-postgres
     env_file:
       - .env
+    environment:
+      DOCKER_USERNAME: postgres
+      POSTGRES_PASSWORD: docker
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
