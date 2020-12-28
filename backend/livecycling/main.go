@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"live_cycling/db"
-	"live_cycling/model"
+	"github.com/converge/livecycling/db"
+	"github.com/converge/livecycling/model"
 	"log"
 	"net/http"
 )
@@ -22,7 +22,7 @@ func raceinfo(res http.ResponseWriter, req *http.Request) {
 	var raceInfo []model.RaceUpdate = db.GetLastRaceUpdates()
 
 	for i := 0; i < len(raceInfo); i++ {
-		fmt.Printf("Id: %s, Race Info %s, Time %s", raceInfo[i].Id, raceInfo[i].RaceAction, raceInfo[i].RaceActionTime)
+		fmt.Printf("Id: %v, Race Info %s, Time %s", raceInfo[i].Id, raceInfo[i].RaceAction, raceInfo[i].RaceActionTime)
 	}
 
 	// encode JSON
@@ -31,7 +31,6 @@ func raceinfo(res http.ResponseWriter, req *http.Request) {
 		log.Fatal("Error converting to JSON format!", err)
 	}
 
-	//_, err = fmt.Fprint(res, raceInfoJson)
 	_, err = res.Write(raceInfoJson)
 	if err != nil {
 		log.Fatal("Unable to return in JSON format!", err)
@@ -48,6 +47,6 @@ func main() {
 	log.Printf("API running at %s%s", hostname, PORT)
 	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
-		log.Fatal("Unable to start API!")
+		log.Fatal("Unable to start API!", err)
 	}
 }

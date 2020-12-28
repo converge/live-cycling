@@ -1,9 +1,10 @@
+// DB is a package to handle database operations
 package db
 
 import (
 	"database/sql"
+	"github.com/converge/livecycling/model"
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"live_cycling/model"
 	"log"
 	"os"
 )
@@ -19,6 +20,9 @@ func GetDatabaseInstance() *sql.DB {
 	return db
 }
 
+/**
+	Retrieve most recent race updates.
+ */
 func GetLastRaceUpdates() []model.RaceUpdate {
 	var dbConn *sql.DB = GetDatabaseInstance()
 	stmt, err := dbConn.Prepare("SELECT id, race_action, race_action_time FROM raceupdates ORDER BY modified DESC LIMIT 5")
