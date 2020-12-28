@@ -2,4 +2,4 @@
 /frontend/.cache/
 /frontend/dist/
 /.idea/
-/.idea/
+/backend/.env

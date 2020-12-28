@@ -19,21 +19,26 @@ func version(res http.ResponseWriter, req *http.Request) {
 func raceinfo(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	res.Header().Set("Content-Type", "application/json")
-	var raceInfo []model.RaceUpdate = db.GetLastRaceUpdates()
 
-	for i := 0; i < len(raceInfo); i++ {
-		fmt.Printf("Id: %v, Race Info %s, Time %s", raceInfo[i].Id, raceInfo[i].RaceAction, raceInfo[i].RaceActionTime)
-	}
+	if req.Method == "GET" {
+		var raceInfo []model.RaceUpdate = db.GetLastRaceUpdates()
 
-	// encode JSON
-	raceInfoJson, err := json.Marshal(raceInfo)
-	if err != nil {
-		log.Fatal("Error converting to JSON format!", err)
-	}
+		for i := 0; i < len(raceInfo); i++ {
+			fmt.Printf("Id: %v, Race Info %s, Time %s", raceInfo[i].Id, raceInfo[i].RaceAction, raceInfo[i].RaceActionTime)
+		}
 
-	_, err = res.Write(raceInfoJson)
-	if err != nil {
-		log.Fatal("Unable to return in JSON format!", err)
+		// encode JSON
+		raceInfoJson, err := json.Marshal(raceInfo)
+		if err != nil {
+			log.Fatal("Error converting to JSON format!", err)
+		}
+
+		_, err = res.Write(raceInfoJson)
+		if err != nil {
+			log.Fatal("Unable to return in JSON format!", err)
+		}
+	} else if req.Method == "POST" {
+		db.AddRaceUpdate()
 	}
 }
 

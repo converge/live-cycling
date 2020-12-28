@@ -21,11 +21,11 @@ func GetDatabaseInstance() *sql.DB {
 }
 
 /**
-	Retrieve most recent race updates.
- */
+Retrieve most recent race updates.
+*/
 func GetLastRaceUpdates() []model.RaceUpdate {
 	var dbConn *sql.DB = GetDatabaseInstance()
-	stmt, err := dbConn.Prepare("SELECT id, race_action, race_action_time FROM raceupdates ORDER BY modified DESC LIMIT 5")
+	stmt, err := dbConn.Prepare("SELECT id, race_action, race_action_time FROM race_updates ORDER BY modified DESC LIMIT 5")
 	if err != nil {
 		log.Fatal("Unable to prepare query database!", err)
 	}
@@ -50,4 +50,22 @@ func GetLastRaceUpdates() []model.RaceUpdate {
 		raceUpdates = append(raceUpdates, queryResult)
 	}
 	return raceUpdates
+}
+
+// todo: receive values as parameters/values
+func AddRaceUpdate() {
+	var dbConn *sql.DB = GetDatabaseInstance()
+	stmt, err := dbConn.Prepare(`
+		INSERT INTO race_updates (race_action, race_action_time, modified) VALUES ($1, $2, $3)
+	`)
+	if err != nil {
+		log.Fatal("Unable to prepare query database!", err)
+	}
+	var res sql.Result
+	res, err = stmt.Exec("ok3", "2020-12-28 21:42:49", "2020-12-28 21:42:49")
+	if err != nil {
+		log.Fatal("Unable to insert values into database!", err)
+	} else {
+		log.Println(res)
+	}
 }

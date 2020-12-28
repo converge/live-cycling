@@ -1,4 +1,5 @@
-CREATE TABLE raceupdates
+
+CREATE TABLE IF NOT EXISTS public.race_updates
 (
     id               SERIAL,
     race_action      TEXT,
